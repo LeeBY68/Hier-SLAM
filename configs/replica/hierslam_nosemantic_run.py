@@ -1,0 +1,153 @@
+import os
+from os.path import join as p_join
+
+scenes = ["room0", "room1", "room2",
+          "office0", "office1", "office2",
+          "office3", "office4"]
+
+primary_device="cuda:0"
+seed = 0
+scene_name = scenes[0]
+## batch run
+# seed = int(os.environ["SEED"])
+# scene_name = scenes[int(os.environ["SCENE_NUM"])]
+
+map_every = 8
+keyframe_every = 5
+mapping_window_size = 24
+tracking_iters = 40
+mapping_iters = 60
+
+group_name = "Replica_no_semantic"
+run_name = f"{scene_name}_{seed}"
+
+config = dict(
+    bar = False,
+    workdir=f"./experiments/{group_name}",
+    run_name=run_name,
+    seed=seed,
+    primary_device=primary_device,
+    map_every=map_every, # Mapping every nth frame
+    keyframe_every=keyframe_every, # Keyframe every nth frame
+    mapping_window_size=mapping_window_size, # Mapping window size
+    report_global_progress_every=500, # Report Global Progress every nth frame
+    eval_every=5, # Evaluate every nth frame (at end of SLAM)
+    scene_radius_depth_ratio=3, # Max First Frame Depth to Scene Radius Ratio (For Pruning/Densification)
+    mean_sq_dist_method="projective", # ["projective", "knn"] (Type of Mean Squared Distance Calculation for Scale of Gaussians)
+    gaussian_distribution="isotropic", # ["isotropic", "anisotropic"] (Isotropic -> Spherical Covariance, Anisotropic -> Ellipsoidal Covariance)
+    report_iter_progress=False,
+    load_checkpoint=False,
+    checkpoint_time_idx=0,
+    save_checkpoints=False, # Save Checkpoints
+    checkpoint_interval=500, # Checkpoint Interval
+    use_wandb=False,
+    wandb=dict(
+        entity="username",
+        project="hierslam_replica_no_semantic",
+        group=group_name,
+        name=run_name,
+        save_qual=False,
+        eval_save_qual=True,
+    ),
+    model = dict(
+        flag_use_embedding = 1, # 0: no mlp; 1: use mlp
+        eval_gt_transfer = False,   # False (all 102 classes are evaluated): no gt transfer; True (visible semantic classes subset per frame are evaluated): use gt transfer 
+    ),
+    data=dict(
+        basedir="/data/Replica_semantic",                      # set to your own path [Replica]
+        basedir_sem = "/data/Replica_semantic",                # set to your own path [Replica]
+        gradslam_data_cfg="./configs/data/replica.yaml",        # no semantic
+        sequence=scene_name,
+        desired_image_height=680,
+        desired_image_width=1200,
+        start=0,
+        end=-1,        # N; full seq: -1
+        stride=1,
+        num_frames=-1,
+        # semantic
+        sem_mode="tree",                        # "tree", "original", "model"
+        num_tree_level = 5,                     # change according to tree (tree:5)
+        use_pyramid = False,                    # no use currently
+        pyramid_level = 4,                     
+    ),
+    tracking=dict(
+        use_gt_poses=False, # Use GT Poses for Tracking
+        forward_prop=True, # Forward Propagate Poses
+        num_iters=tracking_iters,
+        use_sil_for_loss=True,
+        sil_thres=0.99,
+        use_l1=True,
+        ignore_outlier_depth_loss=False,
+        loss_weights=dict(
+            im=0.5,
+            depth=1.0,
+        ),
+        lrs=dict(
+            means3D=0.0,
+            rgb_colors=0.0,
+            unnorm_rotations=0.0,
+            logit_opacities=0.0,
+            log_scales=0.0,
+            semantic = 0.0, 
+            cam_unnorm_rots=0.0004,
+            cam_trans=0.002,
+        ),
+    ),
+    mapping=dict(
+        num_iters=mapping_iters,
+        add_new_gaussians=True,
+        sil_thres=0.5, # For Addition of new Gaussians
+        use_l1=True,
+        use_sil_for_loss=False,
+        ignore_outlier_depth_loss=False,
+        loss_weights=dict(
+            im=0.5,
+            depth=1.0,
+            sem=0.2,
+        ),
+        lrs=dict(
+            means3D=0.0001,
+            rgb_colors=0.0025,
+            unnorm_rotations=0.001,
+            logit_opacities=0.05,
+            log_scales=0.001,
+            semantic = 0.05,
+            cam_unnorm_rots=0.0000,
+            cam_trans=0.0000,
+        ),
+        prune_gaussians=True, # Prune Gaussians during Mapping
+        pruning_dict=dict( # Needs to be updated based on the number of mapping iterations
+            start_after=0,
+            remove_big_after=0,
+            stop_after=20,
+            prune_every=20,
+            removal_opacity_threshold=0.005,
+            final_removal_opacity_threshold=0.005,
+            reset_opacities=False,
+            reset_opacities_every=500, # Doesn't consider iter 0
+        ),
+        use_gaussian_splatting_densification=False, # Use Gaussian Splatting-based Densification during Mapping
+        densify_dict=dict( # Needs to be updated based on the number of mapping iterations
+            start_after=500,
+            remove_big_after=3000,
+            stop_after=5000,
+            densify_every=100,
+            grad_thresh=0.0002,
+            num_to_split_into=2,
+            removal_opacity_threshold=0.005,
+            final_removal_opacity_threshold=0.005,
+            reset_opacities_every=3000, # Doesn't consider iter 0
+        ),
+    ),
+    viz=dict(
+        render_mode='color', # ['color', 'depth' or 'centers']
+        offset_first_viz_cam=True, # Offsets the view camera back by 0.5 units along the view direction (For Final Recon Viz)
+        show_sil=False, # Show Silhouette instead of RGB
+        visualize_cams=True, # Visualize Camera Frustums and Trajectory
+        viz_w=600, viz_h=340,
+        viz_near=0.01, viz_far=100.0,
+        view_scale=2,
+        viz_fps=5, # FPS for Online Recon Viz
+        enter_interactive_post_online=True, # Enter Interactive Mode after Online Recon Viz
+    ),
+)

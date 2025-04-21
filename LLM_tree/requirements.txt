@@ -1,0 +1,6 @@
+openai
+rich
+pandas
+tensorneko_util
+python-dotenv
+orjson
