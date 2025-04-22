@@ -41,7 +41,7 @@ conda install pytorch==1.12.1 torchvision==0.13.1 torchaudio==0.12.1 cudatoolkit
 pip install -r requirements.txt
 
 # Compile the Semantic-3DGS：
-cd hier_semantic_diff-gaussian-rasterization-w-depth
+cd hierslam-diff-gaussian-rasterization-w-depth
 pip install ./
 ```
 
@@ -158,13 +158,13 @@ You can also try different configurations:
 🔹 Run Hier-SLAM with **flat semantic encoding (one-hot)** :
   - Modify the number of semantic categories in the CUDA config file:
   ```cpp
-  // In hier_semantic_diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
+  // In hierslam-diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
   #define NUM_SEMANTIC 102
   ```
   - Reinstall the CUDA extension:
   ```bash
   conda activate hierslam
-  cd hier_semantic_diff-gaussian-rasterization-w-depth
+  cd hierslam-diff-gaussian-rasterization-w-depth
   pip install ./
   cd ..
   ```
@@ -177,13 +177,13 @@ You can also try different configurations:
 🔹 Run Hier-SLAM on the ScanNet dataset using the default **hierarchical semantic setting**:
 - Modify the number of semantic categories in the CUDA config file:
 ```cpp
-// In hier_semantic_diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
+// In hierslam-diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
 #define NUM_SEMANTIC 16
 ```
 - Reinstall the CUDA extension:
 ```bash
 conda activate hierslam
-cd hier_semantic_diff-gaussian-rasterization-w-depth
+cd hierslam-diff-gaussian-rasterization-w-depth
 pip install ./
 cd ..
 ```
@@ -202,13 +202,13 @@ python scripts/hierslam.py configs/scannet/hierslam_nosemantic_run.py
 🔹 Run Hier-SLAM with **scaling-up semantic encoding** :
   - Modify the number of semantic categories in the CUDA config file:
   ```cpp
-  // In hier_semantic_diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
+  // In hierslam-diff-gaussian-rasterization-w-depth/cuda_rasterizer/config.h
   #define NUM_SEMANTIC 74
   ```
   - Reinstall the CUDA extension:
   ```bash
   conda activate hierslam
-  cd hier_semantic_diff-gaussian-rasterization-w-depth
+  cd hierslam-diff-gaussian-rasterization-w-depth
   pip install ./
   cd ..
   ```
