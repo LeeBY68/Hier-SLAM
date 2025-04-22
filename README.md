@@ -57,7 +57,7 @@ Since these sequences do not include per-frame semantic ground truth, we have re
   bash bash_scripts/download_replica.sh
   ```
 - Download the corresponding semantic ground truth from the **following link**:
-📥  [Replica_Semantic_Tree](https://monashuni-my.sharepoint.com/:f:/r/personal/boying_li_monash_edu/Documents/OpenLink/HierSLAM/Replica?csf=1&web=1&e=QIt4fP) 
+📥  [Replica_Semantic_Tree](https://monashuni-my.sharepoint.com/:f:/g/personal/boying_li_monash_edu/ElSCIy6TCVRIjeL5dMvX7a0BmIXTliIV56JIJr8Ku0mctw?e=RBxLCg) 
 
 - The generated hierarchical tree file `info_semantic_tree.json`, located under the Replica directory. The tree is created based on the entire set of semantic classes in the Replica dataset (`info_semantic.json`: provided by official Replica). Copy `info_semantic_tree.json` into each sequence folder.
 
@@ -103,7 +103,7 @@ The [ScanNet dataset](https://github.com/ScanNet/ScanNet) is a real-world RGB-D 
     - `scannetv2-labels.combined.tree-large.tsv`: A large tree generated based on the full set of original ScanNet semantic classes, covering up to 550 unique labels, derived from the 'id' and 'category' columns in scannetv2-labels.combined.tsv.
 
     You can download both hierarchical tree files from the **following link**:
-📥 [ScanNet_Tree](https://monashuni-my.sharepoint.com/:f:/r/personal/boying_li_monash_edu/Documents/OpenLink/HierSLAM/ScanNet?csf=1&web=1&e=1u3XzU)
+📥 [ScanNet_Tree](https://monashuni-my.sharepoint.com/:f:/g/personal/boying_li_monash_edu/EjTOn1JvMPVOuqiO5uwOSGwBQJ5abbjxgmYP8zqoCINuDA?e=aVj5y5)
 
 - After downloading the RGB & depth & poses & semantics and the tree file, the final directory structure for ScanNet should be as follows (click to expand):
     <details>
