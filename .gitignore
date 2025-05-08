@@ -5,6 +5,10 @@ experiments/
 results/
 wandb/
 
+# remain files
+!configs/data/
+!configs/data/**
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
