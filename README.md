@@ -237,6 +237,13 @@ python scripts/export_ply_semantic_tree.py configs/replica/hierslam_semantic_run
 ```
 We recommend using MeshLab or Blender to visualize the resulting PLY files.
 
+🔸 To visualize the reconstructed semantic map and estimated camera poses, run:
+```bash
+python viz_scripts/online_recon_sem_replica.py configs/replica/hierslam_semantic_run.py --flag_semantic
+```
+- Add `--flag_semantic` to enable semantic visualization. 
+- Omit `--flag_semantic` to display the RGB reconstruction instead.
+
 ## Acknowledgement
 We thank the authors for releasing code for their awesome works:
 [3DGS](https://github.com/graphdeco-inria/gaussian-splatting)、
