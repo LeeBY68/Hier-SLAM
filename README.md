@@ -49,14 +49,14 @@ pip install ./
 
 ### Replica
 The [Replica dataset](https://github.com/facebookresearch/Replica-Dataset) is a synthetic indoor dataset.
-Our method uses the rendered sequences provided by previous works, including NICE-SLAM and iMAP.
-Since these sequences do not include per-frame semantic ground truth, we have rendered and provided semantic annotations for all frames.
+Our method uses the **same sequences** provided by previous works, including NICE-SLAM and iMAP (Same RGB and depth sequences with the exact same trajectories), to ensure a fair comparison with visual SLAM methods.
 
-- To automatically download the Replica RGBD sequences, run the following script:
+Since these sequences do not generate per-frame semantic ground truth, we have **rendered and generated the semantic ground truth** from the synthetic Replica dataset.
+- To automatically download the Replica RGBD sequences, run the following script to download the data originally generated via NICE-SLAM:
   ```
   bash bash_scripts/download_replica.sh
   ```
-- Download the corresponding semantic ground truth from the **following link**:
+- Download the corresponding per-frame semantic ground truth we rendered from the **following link**:
 📥  [Replica_Semantic_Tree](https://monashuni-my.sharepoint.com/:f:/g/personal/boying_li_monash_edu/ElSCIy6TCVRIjeL5dMvX7a0BmIXTliIV56JIJr8Ku0mctw?e=RBxLCg) 
 
 - The generated hierarchical tree file `info_semantic_tree.json`, located under the Replica directory. The tree is created based on the entire set of semantic classes in the Replica dataset (`info_semantic.json`: provided by official Replica). Copy `info_semantic_tree.json` into each sequence folder.
