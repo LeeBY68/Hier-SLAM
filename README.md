@@ -49,7 +49,7 @@ pip install ./
 
 ### Replica
 The [Replica dataset](https://github.com/facebookresearch/Replica-Dataset) is a synthetic indoor dataset.
-Our method uses the **same sequences** provided by previous works, including NICE-SLAM and iMAP (Same RGB and depth sequences with the exact same trajectories), to ensure a fair comparison with visual SLAM methods.
+Our method uses the **same sequences** provided by previous works, including NICE-SLAM and iMAP (Same RGB and depth sequences with the same trajectories), to ensure a fair comparison with visual SLAM methods.
 
 Since these sequences do not generate per-frame semantic ground truth, we have **rendered and generated the semantic ground truth** from the synthetic Replica dataset.
 - To automatically download the Replica RGBD sequences, run the following script to download the data originally generated via NICE-SLAM:
