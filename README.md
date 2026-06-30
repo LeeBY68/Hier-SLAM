@@ -261,6 +261,12 @@ If you find our work useful, please cite:
   booktitle={IEEE International Conference on Robotics and Automation (ICRA)},
   year={2025}
 }
+@article{li2025hierpp,
+  title={Hier-slam++: Neuro-symbolic semantic slam with a hierarchically categorical gaussian splatting},
+  author={Li, Boying and Hao, Vuong Chi and Stuckey, Peter J and Reid, Ian and Rezatofighi, Hamid},
+  journal={arXiv preprint arXiv:2502.14931},
+  year={2025}
+}
 ```
 
 
